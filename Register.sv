@@ -16,8 +16,11 @@ module Register(
     assign AlwaysOnDataOut = DataContents;
 
     always_ff @(posedge clock) begin //| possible problem here, data will always take two clock cycles to pass though register.
-        if(InEnable ) DataContents <= DataIn;
-        if(OutEnable) DataOut <= DataContents;
-        else DataOut <= 32'b0;
+        if(InEnable) DataContents <= DataIn;
+    end
+
+    always_comb begin //| possible problem here, data will always take two clock cycles to pass though register.
+        if(OutEnable) DataOut = DataContents;
+        else DataOut = 32'b0;
     end
 endmodule
